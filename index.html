@@ -189,6 +189,7 @@ footer b{display:block;font-family:var(--head);font-weight:400;font-size:26px;co
 .note:nth-child(3n+1){transform:rotate(-.4deg)}
 .note p{font-size:15px;line-height:1.6;white-space:pre-wrap;word-break:break-word}
 .note b{display:block;margin-top:6px;text-align:right;font-family:var(--head);font-weight:400;font-size:14px;color:var(--navy)}
+.note b small{display:block;font-family:var(--body);font-size:11px;color:var(--sub);margin-top:1px}
 .wish-empty{text-align:center;color:var(--sub);font-size:14px}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
 </style>
@@ -469,7 +470,10 @@ try {
     list.innerHTML = '';
     snap.forEach(d => {
       const m = d.data(), el = document.createElement('div'), p = document.createElement('p'), b = document.createElement('b');
-      el.className = 'note'; p.textContent = m.text; b.textContent = '- ' + m.name;
+      el.className = 'note'; p.textContent = m.text;
+      const t = m.createdAt && m.createdAt.toDate ? m.createdAt.toDate() : new Date();
+      const ds = `${t.getFullYear()}.${String(t.getMonth()+1).padStart(2,'0')}.${String(t.getDate()).padStart(2,'0')}`;
+      b.textContent = '- ' + m.name; const dt = document.createElement('small'); dt.textContent = ds; b.appendChild(dt);
       el.append(p, b); list.appendChild(el);
     });
   }, () => say('메시지를 불러오지 못했어요. 잠시 후 다시 확인해주세요.'));
