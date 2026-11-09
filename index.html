@@ -172,6 +172,24 @@ footer b{display:block;font-family:var(--head);font-weight:400;font-size:26px;co
 .share{margin-top:16px;display:inline-block;background:var(--sun);color:var(--navy);font-family:var(--head);padding:10px 24px;border-radius:99px;font-size:16px}
 .toast{position:fixed;left:50%;bottom:30px;transform:translateX(-50%) translateY(80px);background:rgba(0,0,0,.85);color:#fff;padding:10px 20px;border-radius:99px;font-size:14px;transition:transform .35s;z-index:120;white-space:nowrap}
 .toast.show{transform:translateX(-50%)}
+/* ───── 축하 메시지 ───── */
+.wish{background:linear-gradient(#FFF8EC,#FFEFD6)}
+.wish-form{background:#fff;border-radius:20px;padding:16px;box-shadow:0 8px 24px rgba(0,0,0,.08);margin-top:18px;display:flex;flex-direction:column;gap:10px}
+.wish-form input,.wish-form textarea{width:100%;border:2px solid #efe3cc;border-radius:12px;padding:11px 13px;font-family:var(--body);font-size:16px;color:var(--text);background:#fffdf8;resize:none;outline:none}
+.wish-form input:focus,.wish-form textarea:focus{border-color:var(--coral)}
+.wish-row{display:flex;justify-content:space-between;align-items:center}
+.wish-row span{font-size:12px;color:var(--sub)}
+.wish-row button{background:var(--coral);color:#fff;font-family:var(--head);font-size:17px;padding:10px 22px;border-radius:99px;box-shadow:0 4px 0 #c94a3c}
+.wish-row button:active{transform:translateY(3px);box-shadow:0 1px 0 #c94a3c}
+.wish-row button:disabled{opacity:.5}
+.wish-list{margin-top:22px;display:flex;flex-direction:column;gap:14px}
+.note{background:#FFF3B0;border-radius:4px 4px 14px 4px;padding:14px 16px;box-shadow:0 4px 12px rgba(0,0,0,.1);position:relative;animation:pop .5s}
+.note:nth-child(3n+2){background:#FFD9D2;transform:rotate(.8deg)}
+.note:nth-child(3n+3){background:#D6F1E7;transform:rotate(-.8deg)}
+.note:nth-child(3n+1){transform:rotate(-.4deg)}
+.note p{font-size:15px;line-height:1.6;white-space:pre-wrap;word-break:break-word}
+.note b{display:block;margin-top:6px;text-align:right;font-family:var(--head);font-weight:400;font-size:14px;color:var(--navy)}
+.wish-empty{text-align:center;color:var(--sub);font-size:14px}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
 </style>
 </head>
@@ -282,6 +300,19 @@ footer b{display:block;font-family:var(--head);font-weight:400;font-size:26px;co
         <p class="thanks" id="thanks">🎉 지오가 방금 웃었어요!<br><small style="font-family:var(--body);font-size:14px;color:var(--sub)">11월 14일, 한상에서 만나요.</small></p>
       </section>
 
+      <!-- ═══ 축하 메시지 ═══ -->
+      <section class="wish">
+        <p class="eyebrow">CONGRATULATIONS</p>
+        <h2>사랑하는 지오에게<br>축하메시지를 남겨주세요 💌</h2>
+        <p class="lead">남겨주신 말은 지오가 크면 읽어줄게요.</p>
+        <form class="wish-form" id="wishForm" autocomplete="off">
+          <input id="wName" type="text" maxlength="20" placeholder="이름 (예: 큰아빠, 이모, 할머니)" required>
+          <textarea id="wText" maxlength="200" rows="3" placeholder="지오에게 한마디 해주세요 (200자)" required></textarea>
+          <div class="wish-row"><span id="wCount">0 / 200</span><button type="submit" id="wBtn">💌 남기기</button></div>
+        </form>
+        <div class="wish-list" id="wishList"><p class="wish-empty">메시지를 불러오는 중…</p></div>
+      </section>
+
       <footer>
         <b>김지오</b>
         2025.11.20 ~ 2026.11.14 …and counting<br>
@@ -297,7 +328,7 @@ footer b{display:block;font-family:var(--head);font-weight:400;font-size:26px;co
 <script>
 const BIRTH = new Date(2025,10,20), PARTY = new Date(2026,10,14,11,30);
 const $ = s => document.querySelector(s);
-const toast = m => { const t=$('#toast'); t.textContent=m; t.classList.add('show'); clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove('show'),2200); };
+window.toast = m => { const t=$('#toast'); t.textContent=m; t.classList.add('show'); clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove('show'),2200); };
 
 /* 타임라인 데이터: 날짜는 파일명(KakaoTalk_YYYYMMDD) 기준 */
 const hi = Array.from({length:10},(_,i)=>'20260705_114104906'+(i?'_0'+i:'')).map(n=>n.replace('_010','_10'));
@@ -409,6 +440,60 @@ let ni=0;
 function dodge(e){ e && e.preventDefault(); const w=$('#rsvp').clientWidth*.35; no.style.left=((Math.random()-.5)*w*2)+'px'; no.style.top=((Math.random()-.5)*50)+'px'; no.textContent=excuses[ni++%excuses.length]; }
 no.addEventListener('mouseenter',dodge); no.addEventListener('touchstart',dodge,{passive:false});
 no.onclick = ()=>{ dodge(); toast('😭 지오 울어요 — 다시 눌러주세요'); };
+</script>
+
+<!-- 축하 메시지 (Firebase Firestore) -->
+<script type="module">
+const cfg = {
+  apiKey: "AIzaSyC-eRnDRDudvXkDx13CO_Ipr2qXIwKzlqw",
+  authDomain: "jiokim-46f9c.firebaseapp.com",
+  projectId: "jiokim-46f9c",
+  storageBucket: "jiokim-46f9c.firebasestorage.app",
+  messagingSenderId: "146938152368",
+  appId: "1:146938152368:web:0ad7d8ee1b2178cea68275"
+};
+const $ = s => document.querySelector(s);
+const list = $('#wishList'), form = $('#wishForm'), btn = $('#wBtn');
+const say = m => { list.innerHTML = ''; const p = document.createElement('p'); p.className = 'wish-empty'; p.textContent = m; list.appendChild(p); };
+$('#wText').addEventListener('input', e => { $('#wCount').textContent = e.target.value.length + ' / 200'; });
+
+try {
+  const V = '10.14.1', base = `https://www.gstatic.com/firebasejs/${V}/`;
+  const { initializeApp } = await import(base + 'firebase-app.js');
+  const { getFirestore, collection, addDoc, query, orderBy, limit, onSnapshot, serverTimestamp } = await import(base + 'firebase-firestore.js');
+  const db = getFirestore(initializeApp(cfg));
+  const col = collection(db, 'messages');
+
+  onSnapshot(query(col, orderBy('createdAt', 'desc'), limit(100)), snap => {
+    if (snap.empty) return say('첫 번째 축하메시지를 남겨주세요 🎉');
+    list.innerHTML = '';
+    snap.forEach(d => {
+      const m = d.data(), el = document.createElement('div'), p = document.createElement('p'), b = document.createElement('b');
+      el.className = 'note'; p.textContent = m.text; b.textContent = '- ' + m.name;
+      el.append(p, b); list.appendChild(el);
+    });
+  }, () => say('메시지를 불러오지 못했어요. 잠시 후 다시 확인해주세요.'));
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const name = $('#wName').value.trim(), text = $('#wText').value.trim();
+    if (!name || !text) return;
+    let last = 0; try { last = +localStorage.getItem('jio_wish_t') || 0; } catch (_) {}
+    if (Date.now() - last < 15000) return toast('잠깐만요, 조금 있다 다시 남겨주세요 🙏');
+    btn.disabled = true;
+    try {
+      await addDoc(col, { name, text, createdAt: serverTimestamp() });
+      try { localStorage.setItem('jio_wish_t', Date.now()); } catch (_) {}
+      $('#wText').value = ''; $('#wCount').textContent = '0 / 200';
+      toast('💌 메시지가 전달됐어요! 고마워요');
+      const r = document.querySelector('#confetti').getBoundingClientRect(); burst(r.width / 2, r.height * .6, 100);
+    } catch (err) { toast('전송에 실패했어요. 다시 시도해주세요'); }
+    btn.disabled = false;
+  });
+} catch (err) {
+  say('메시지 기능을 불러오지 못했어요.');
+  form.querySelectorAll('input,textarea,button').forEach(x => x.disabled = true);
+}
 </script>
 </body>
 </html>
