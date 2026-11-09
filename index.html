@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>지오의 첫 번째 생일파티 초대장</title>
+<meta name="description" content="2026.11.14(토) 11:30 · 한상 · 지오가 울기 전에 와주세요!">
+<meta property="og:title" content="🍼 지오가 서른… 아니 돌이 됐어요!">
+<meta property="og:description" content="2026.11.14(토) 11:30 · 안 오시면 지오 울어요">
+<meta property="og:image" content="img/20261031_111053399.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Gowun+Dodum&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FFF8EC; --card:#fff; --navy:#1C2B4A; --coral:#FF6B5B; --sun:#FFC93C; --mint:#6CCBB0; --sky:#BFE3F5;
+  --text:#2c2c2c; --sub:#8a8378;
+  --head:'Jua','Gowun Dodum',sans-serif; --body:'Gowun Dodum','Apple SD Gothic Neo',sans-serif;
+}
+@media (prefers-color-scheme: dark){ :root{ --bg:#FFF8EC; } } /* 초대장은 항상 밝게 */
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{background:#e9e2d3;font-family:var(--body);color:var(--text);line-height:1.7;
+  background-image:radial-gradient(circle at 20% 20%,#f6d9a8 0,transparent 40%),radial-gradient(circle at 80% 80%,#bfe3f5 0,transparent 40%);
+  background-attachment:fixed}
+img,video{display:block;max-width:100%}
+button{font-family:inherit;cursor:pointer;border:0}
+
+/* ───── 폰 프레임 (데스크톱에서만) ───── */
+.stage{min-height:100vh;display:flex;justify-content:center;align-items:center;padding:24px}
+.phone{position:relative;width:100%;max-width:430px;background:var(--bg);overflow:hidden}
+.side-note{display:none}
+@media (min-width:640px){
+  .stage{padding:32px 0}
+  .phone{width:390px;height:820px;border-radius:46px;border:11px solid #14151a;box-shadow:0 30px 80px rgba(0,0,0,.35),0 0 0 2px #444;overflow:hidden}
+  .phone::before{content:"";position:absolute;z-index:50;top:8px;left:50%;transform:translateX(-50%);width:110px;height:26px;border-radius:20px;background:#14151a}
+  .scroller{height:100%;overflow-y:auto;scrollbar-width:none;scroll-behavior:smooth}
+  .scroller::-webkit-scrollbar{display:none}
+  .side-note{display:block;position:fixed;left:50%;margin-left:240px;top:50%;transform:translateY(-50%) rotate(3deg);font-family:var(--head);font-size:20px;color:var(--navy);width:180px;line-height:1.4}
+  .side-note b{color:var(--coral)}
+}
+@media (max-width:639px){ .stage{padding:0;display:block} .phone{max-width:none} body{background:var(--bg)} }
+
+/* 상태바 */
+.status{position:sticky;top:0;z-index:40;display:flex;justify-content:space-between;padding:10px 22px 6px;font-size:12px;font-weight:700;color:var(--navy);background:linear-gradient(var(--bg) 70%,transparent);font-family:var(--body)}
+@media (max-width:639px){.status{display:none}}
+.urlbar{margin:0 14px;padding:6px 12px;border-radius:12px;background:#efe6d3;font-size:11px;color:var(--sub);text-align:center}
+
+/* ───── 공통 ───── */
+section{padding:56px 22px;position:relative}
+.eyebrow{font-family:var(--head);color:var(--coral);font-size:14px;letter-spacing:.12em;text-align:center}
+h2{font-family:var(--head);font-weight:400;font-size:30px;line-height:1.3;text-align:center;color:var(--navy);margin:6px 0 18px}
+.lead{text-align:center;color:#5b564d;font-size:15px}
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
+.reveal.in{opacity:1;transform:none}
+.tape{position:absolute;width:70px;height:22px;background:rgba(255,201,60,.7);top:-10px;left:50%;margin-left:-35px;transform:rotate(-4deg)}
+
+/* ───── 커버 ───── */
+.cover{padding:30px 0 40px;text-align:center;overflow:hidden;background:linear-gradient(#FFF1D0,var(--bg))}
+.cover .tag{display:inline-block;background:var(--navy);color:#fff;font-family:var(--head);padding:4px 16px;border-radius:99px;font-size:14px;transform:rotate(-2deg);margin-top:8px}
+.cover h1{font-family:var(--head);font-weight:400;font-size:46px;line-height:1.15;color:var(--navy);margin:14px 0 4px}
+.cover h1 em{font-style:normal;color:var(--coral)}
+.cover .sub{font-size:15px;color:#5b564d}
+.hero-wrap{position:relative;width:78%;margin:24px auto 10px;transform:rotate(-3deg)}
+.hero-wrap img{border-radius:22px;border:8px solid #fff;box-shadow:0 14px 30px rgba(28,43,74,.25);aspect-ratio:4/5;object-fit:cover;object-position:center 30%}
+.hero-wrap .crown{position:absolute;top:-40px;left:50%;transform:translateX(-50%) rotate(8deg);font-size:58px;animation:bob 2.4s ease-in-out infinite}
+.sticker{position:absolute;font-family:var(--head);background:var(--sun);color:var(--navy);border-radius:50%;width:84px;height:84px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:15px;line-height:1.15;right:-18px;bottom:-14px;transform:rotate(12deg);box-shadow:0 6px 14px rgba(0,0,0,.2);animation:wob 3s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateX(-50%) rotate(8deg) translateY(0)}50%{transform:translateX(-50%) rotate(-4deg) translateY(-8px)}}
+@keyframes wob{0%,100%{transform:rotate(12deg)}50%{transform:rotate(-6deg) scale(1.06)}}
+.when{margin-top:22px;font-family:var(--head);font-size:20px;color:var(--navy)}
+.when small{display:block;font-family:var(--body);font-size:13px;color:var(--sub)}
+.scrollhint{margin-top:18px;font-size:13px;color:var(--sub);animation:bob2 1.6s infinite}
+@keyframes bob2{50%{transform:translateY(6px)}}
+.marquee{background:var(--navy);color:var(--sun);font-family:var(--head);overflow:hidden;white-space:nowrap;padding:8px 0;font-size:15px}
+.marquee span{display:inline-block;padding-left:100%;animation:mq 22s linear infinite}
+@keyframes mq{to{transform:translateX(-100%)}}
+canvas#confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:99}
+@media (min-width:640px){canvas#confetti{position:absolute}}
+
+/* ───── 편지 ───── */
+.letter{background:#fff;border-radius:6px;padding:30px 22px;box-shadow:0 8px 24px rgba(0,0,0,.08);position:relative;transform:rotate(.6deg);
+  background-image:repeating-linear-gradient(transparent 0 31px,#f1e9d8 31px 32px)}
+.letter p{line-height:32px;font-size:15.5px}
+.letter .sign{text-align:right;font-family:var(--head);color:var(--navy);margin-top:10px}
+.letter mark{background:linear-gradient(transparent 55%,var(--sun) 55%);color:inherit}
+
+/* ───── 스펙 카드 (지오 도감) ───── */
+.dex{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}
+.dex div{background:#fff;border-radius:16px;padding:12px;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,.06)}
+.dex b{display:block;font-family:var(--head);font-weight:400;font-size:22px;color:var(--coral)}
+.dex span{font-size:12px;color:var(--sub)}
+
+/* ───── 타임라인 ───── */
+.tl{position:relative;margin-top:30px;padding-left:34px}
+.tl::before{content:"";position:absolute;left:11px;top:0;bottom:0;width:4px;border-radius:4px;background:repeating-linear-gradient(var(--coral) 0 10px,transparent 10px 18px)}
+.tl-item{position:relative;margin-bottom:38px}
+.tl-item::before{content:"";position:absolute;left:-31px;top:6px;width:18px;height:18px;border-radius:50%;background:var(--sun);border:4px solid var(--bg);box-shadow:0 0 0 3px var(--coral)}
+.tl-date{font-family:var(--head);color:var(--coral);font-size:15px}
+.tl-date i{font-style:normal;background:var(--navy);color:#fff;border-radius:99px;font-size:12px;padding:1px 9px;margin-left:6px;vertical-align:1px}
+.tl-title{font-family:var(--head);font-size:21px;color:var(--navy);line-height:1.3;margin:2px 0 8px}
+.tl-desc{font-size:14px;color:#5b564d;margin-top:8px}
+.media{border-radius:18px;overflow:hidden;background:#000;box-shadow:0 8px 20px rgba(28,43,74,.18);border:5px solid #fff}
+.media img,.media video{width:100%;max-height:430px;object-fit:cover}
+.strip{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px;scrollbar-width:none}
+.strip::-webkit-scrollbar{display:none}
+.strip .media{flex:0 0 78%;scroll-snap-align:center}
+.strip .media img{height:300px;max-height:none}
+.badge{position:absolute;top:8px;left:8px;background:rgba(0,0,0,.6);color:#fff;font-size:11px;padding:2px 9px;border-radius:99px;z-index:2;font-family:var(--body)}
+.media{position:relative}
+.flip img{aspect-ratio:3/4;max-height:none}
+.flip .cnt{position:absolute;right:8px;bottom:8px;background:rgba(0,0,0,.6);color:#fff;font-size:11px;padding:2px 9px;border-radius:99px}
+.vid-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:44px;color:#fff;background:rgba(0,0,0,.18);transition:opacity .3s;pointer-events:none}
+.media.playing .vid-play{opacity:0}
+
+/* ───── 울음 ───── */
+.cry{background:var(--navy);color:#fff;text-align:center;overflow:hidden;padding-bottom:30px}
+.cry .eyebrow{color:var(--sun)}
+.cry h2{color:#fff;font-size:34px}
+.cry-stage{position:relative;width:78%;margin:18px auto 0}
+.cry-stage img{filter:drop-shadow(0 0 0 #fff) drop-shadow(0 0 6px #fff) drop-shadow(0 12px 18px rgba(0,0,0,.5));animation:shake 2.4s infinite}
+@keyframes shake{0%,100%{transform:rotate(-1.5deg)}25%{transform:rotate(2deg) translateY(-3px)}50%{transform:rotate(-2deg)}75%{transform:rotate(1.5deg) translateY(-2px)}}
+.tear{position:absolute;font-size:30px;animation:fall 1.6s infinite;opacity:0}
+.tear.a{left:30%;top:42%}.tear.b{left:62%;top:40%;animation-delay:.5s}.tear.c{left:46%;top:46%;animation-delay:1s}
+@keyframes fall{0%{opacity:0;transform:translateY(0)}20%{opacity:1}100%{opacity:0;transform:translateY(120px)}}
+.speech{position:relative;display:inline-block;background:#fff;color:var(--navy);font-family:var(--head);font-size:26px;padding:14px 22px;border-radius:22px;margin-top:20px;line-height:1.3;animation:pulse 1.8s ease-in-out infinite}
+.speech::before{content:"";position:absolute;top:-14px;left:50%;margin-left:-10px;border:10px solid transparent;border-bottom-color:#fff;border-top:0}
+@keyframes pulse{50%{transform:scale(1.05)}}
+.cry .small{font-size:13px;color:#b9c3d9;margin-top:14px}
+
+/* ───── 정보 ───── */
+.info{background:#fff;border-radius:24px;padding:26px 20px;box-shadow:0 8px 24px rgba(0,0,0,.08);margin-top:6px;text-align:center}
+.dday{font-family:var(--head);font-size:44px;color:var(--coral);line-height:1}
+.cd{display:flex;justify-content:center;gap:8px;margin:14px 0 20px}
+.cd div{background:var(--bg);border-radius:14px;padding:8px 0;width:64px}
+.cd b{display:block;font-family:var(--head);font-weight:400;font-size:26px;color:var(--navy);line-height:1.1}
+.cd span{font-size:11px;color:var(--sub)}
+.row{display:flex;gap:10px;text-align:left;padding:12px 0;border-top:1px dashed #e6dcc7;font-size:15px}
+.row .k{flex:0 0 52px;font-family:var(--head);color:var(--coral)}
+.btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:16px}
+.btn{display:block;text-align:center;text-decoration:none;padding:13px 8px;border-radius:14px;font-size:14px;font-family:var(--head);background:var(--navy);color:#fff}
+.btn.alt{background:var(--bg);color:var(--navy);border:2px solid var(--navy)}
+.btn.full{grid-column:1/-1}
+.mapfake{margin-top:16px;border-radius:16px;overflow:hidden;position:relative;height:150px;background:#dfeccf;
+  background-image:linear-gradient(90deg,transparent 48%,#fff 48% 52%,transparent 52%),linear-gradient(0deg,transparent 40%,#fff 40% 46%,transparent 46%),linear-gradient(35deg,transparent 60%,#f6e7b8 60% 66%,transparent 66%)}
+.pin{position:absolute;left:50%;top:50%;transform:translate(-50%,-100%);font-size:40px;animation:drop 1.4s infinite}
+@keyframes drop{50%{transform:translate(-50%,-125%)}}
+.mapfake span{position:absolute;left:50%;top:58%;transform:translateX(-50%);background:#fff;padding:2px 12px;border-radius:99px;font-family:var(--head);font-size:14px;color:var(--navy);box-shadow:0 2px 8px rgba(0,0,0,.2)}
+
+/* ───── 맥주 ───── */
+.beer{background:linear-gradient(#FFF8EC,#FFE9A8);text-align:center;overflow:hidden}
+.beer-photo{position:relative;width:84%;margin:18px auto 0}
+.beer-photo img{border-radius:22px;border:8px solid #fff;box-shadow:0 14px 30px rgba(0,0,0,.25);transform:rotate(2deg)}
+.beer-photo .mug{position:absolute;font-size:46px;top:-20px;left:-12px;animation:clink 1.6s infinite}
+.beer-photo .mug.r{left:auto;right:-12px;animation-delay:.8s;transform:scaleX(-1)}
+@keyframes clink{50%{transform:rotate(-18deg) translateX(8px)}}
+.q{font-family:var(--head);font-size:30px;color:var(--navy);line-height:1.3;margin:26px 0 6px}
+.q em{font-style:normal;color:var(--coral)}
+.q-sub{font-size:13px;color:var(--sub);margin-bottom:18px}
+.rsvp{display:flex;flex-direction:column;gap:10px;position:relative;min-height:150px}
+.yes{background:var(--coral);color:#fff;font-family:var(--head);font-size:22px;padding:16px;border-radius:18px;box-shadow:0 8px 0 #c94a3c;transition:transform .1s}
+.yes:active{transform:translateY(5px);box-shadow:0 3px 0 #c94a3c}
+.no{background:#fff;color:var(--sub);font-size:13px;padding:10px;border-radius:14px;border:1px solid #ddd;position:relative;transition:left .2s,top .2s;align-self:center;width:60%}
+.thanks{display:none;font-family:var(--head);font-size:22px;color:var(--navy);margin-top:16px}
+.thanks.show{display:block;animation:pop .6s}
+@keyframes pop{0%{transform:scale(.3);opacity:0}70%{transform:scale(1.15)}100%{transform:scale(1);opacity:1}}
+
+/* ───── 푸터 ───── */
+footer{padding:36px 22px 90px;text-align:center;background:var(--navy);color:#cfd6e6;font-size:13px}
+footer b{display:block;font-family:var(--head);font-weight:400;font-size:26px;color:#fff;margin-bottom:4px}
+.share{margin-top:16px;display:inline-block;background:var(--sun);color:var(--navy);font-family:var(--head);padding:10px 24px;border-radius:99px;font-size:16px}
+.toast{position:fixed;left:50%;bottom:30px;transform:translateX(-50%) translateY(80px);background:rgba(0,0,0,.85);color:#fff;padding:10px 20px;border-radius:99px;font-size:14px;transition:transform .35s;z-index:120;white-space:nowrap}
+.toast.show{transform:translateX(-50%)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="side-note">📱 폰으로 보면<br>더 <b>생생</b>해요!<br><small style="font-size:14px">(안 울어요)</small></div>
+  <div class="phone">
+    <canvas id="confetti"></canvas>
+    <div class="scroller" id="scroller">
+      <div class="status"><span>9:41</span><span>5G ▮▮▮ 🔋</span></div>
+      <div class="urlbar">🔒 jio-1st-birthday.kr</div>
+
+      <!-- ═══ 커버 ═══ -->
+      <header class="cover">
+        <span class="tag">🎂 FIRST BIRTHDAY INVITATION</span>
+        <h1>지오가<br><em>돌</em>이 됐어요!</h1>
+        <p class="sub">태어난 지 딱 1년,<br>이제 걷기 직전! (아마도)</p>
+        <div class="hero-wrap">
+          <span class="crown">👑</span>
+          <img src="img/20261031_111053399_01.jpg" alt="활짝 웃는 지오">
+          <div class="sticker">치아<br>미남<br>지오</div>
+        </div>
+        <p class="when">2026. 11. 14 (토) 낮 11:30<small>청주 · 한상</small></p>
+        <p class="scrollhint">▼ 스크롤 해보세요 (지오 인생이 펼쳐집니다)</p>
+      </header>
+      <div class="marquee"><span>🍼 지오 돌잔치 🎉 안 오시면 지오 울어요 😭 와서 지오랑 짠 🍻 떡뻥은 지오 거 🍘 사진 많이 찍어주세요 📸 선물보다 마음 💛</span></div>
+
+      <!-- ═══ 편지 ═══ -->
+      <section>
+        <p class="eyebrow">DEAR GUESTS</p>
+        <h2>초대 말씀</h2>
+        <div class="letter reveal"><div class="tape"></div>
+          <p>안녕하세요, <mark>지오</mark>예요.<br>
+          (아직 말은 못 해서 부모님이 대신 써줬어요.)</p>
+          <p>작년 11월, 저는 울면서 세상에 나왔어요.<br>
+          그 후로 먹고, 자고, 울고, <mark>또 먹고</mark>…<br>
+          이제는 앉고, 기고, 웃고, 가끔 선글라스도 써요 😎</p>
+          <p>이 모든 게 사랑해주신 양가 가족 여러분 덕분이라,<br>
+          떡뻥 한 입씩 나눠드리는 마음으로 초대합니다.</p>
+          <p class="sign">- 동운 · 희주 · 지오 올림</p>
+        </div>
+
+        <div class="dex reveal">
+          <div><b>2025.11.20</b><span>세상에 도착한 날</span></div>
+          <div><b id="dayCount">D+000</b><span>지구 거주 일수</span></div>
+          <div><b>떡뻥</b><span>최애 음식 (1위)</span></div>
+          <div><b>울음</b><span>특기 (상시 발동)</span></div>
+        </div>
+      </section>
+
+      <!-- ═══ 타임라인 ═══ -->
+      <section style="padding-top:20px">
+        <p class="eyebrow">JIO'S TIMELINE</p>
+        <h2>지오 1년 <br>압축 파일 📂</h2>
+        <p class="lead">사진 찍힌 순서대로, 날짜 순입니다.</p>
+        <div class="tl" id="tl"></div>
+      </section>
+
+      <!-- ═══ 우는 지오 ═══ -->
+      <section class="cry">
+        <p class="eyebrow">⚠ WARNING</p>
+        <h2>지오 우는 거<br>보고 싶으세요?</h2>
+        <div class="cry-stage">
+          <img src="img/cry_cutout.png" alt="우는 지오">
+          <span class="tear a">💧</span><span class="tear b">💧</span><span class="tear c">💧</span>
+        </div>
+        <div class="speech">안오시면<br>지오 울어요 😭</div>
+        <p class="small">※ 이 사진은 실제 상황입니다.<br>(사진 속 지오: 떡뻥을 뺏긴 직후)</p>
+      </section>
+
+      <!-- ═══ 장소 ═══ -->
+      <section>
+        <p class="eyebrow">WHEN &amp; WHERE</p>
+        <h2>오시는 길</h2>
+        <div class="info reveal">
+          <p class="dday" id="ddayBig">D-5</p>
+          <div class="cd" id="cd">
+            <div><b id="cdD">0</b><span>일</span></div><div><b id="cdH">0</b><span>시간</span></div><div><b id="cdM">0</b><span>분</span></div><div><b id="cdS">0</b><span>초</span></div>
+          </div>
+          <div class="row"><span class="k">일시</span><span>2026년 11월 14일 토요일<br><b>낮 11시 30분</b></span></div>
+          <div class="row"><span class="k">장소</span><span><b>한상</b> (한식)<br>충북 청주시 흥덕구 가포산로 200<br>주건축물 제1동 1층</span></div>
+          <div class="row"><span class="k">전화</span><span>0507-1359-4547</span></div>
+          <div class="mapfake"><span>한상</span><div class="pin">📍</div></div>
+          <div class="btns">
+            <a class="btn full" href="https://map.naver.com/p/entry/place/1873199107?placePath=%2Fhome" target="_blank" rel="noopener">🗺 네이버 지도로 길찾기</a>
+            <button class="btn alt" id="copyAddr">📋 주소 복사</button>
+            <a class="btn alt" href="tel:050713594547">📞 식당 전화</a>
+          </div>
+        </div>
+        <p class="lead" style="margin-top:16px;font-size:13px">주차는 식당 앞에서 가능한지 도착 전 전화로 한 번 확인해주세요 🚗</p>
+      </section>
+
+      <!-- ═══ 맥주 ═══ -->
+      <section class="beer">
+        <p class="eyebrow">ONE MORE THING</p>
+        <div class="beer-photo reveal">
+          <span class="mug">🍺</span><span class="mug r">🍺</span>
+          <img src="img/beer.jpg" alt="지오와 맥주 건배" loading="lazy">
+        </div>
+        <p class="q reveal">돌잔치 와서<br><em>지오랑 짠</em><br>해주실거죠? 🍻</p>
+        <p class="q-sub">(지오는 보리차로 짠합니다)</p>
+        <div class="rsvp" id="rsvp">
+          <button class="yes" id="yes">당연하죠! 짠~ 하러 갑니다 🍻</button>
+          <button class="no" id="no">음… 못 갈 것 같아요</button>
+        </div>
+        <p class="thanks" id="thanks">🎉 지오가 방금 웃었어요!<br><small style="font-family:var(--body);font-size:14px;color:var(--sub)">11월 14일, 한상에서 만나요.</small></p>
+      </section>
+
+      <footer>
+        <b>김지오</b>
+        2025.11.20 ~ 2026.11.14 …and counting<br>
+        Made with love by 동운 &amp; 희주<br>
+        만든사람 : 지오를 3번째로 사랑하는 큰아빠 동욱 💛<br>
+        <button class="share" id="share">📤 가족 단톡방에 뿌리기</button>
+      </footer>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const BIRTH = new Date(2025,10,20), PARTY = new Date(2026,10,14,11,30);
+const $ = s => document.querySelector(s);
+const toast = m => { const t=$('#toast'); t.textContent=m; t.classList.add('show'); clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove('show'),2200); };
+
+/* 타임라인 데이터: 날짜는 파일명(KakaoTalk_YYYYMMDD) 기준 */
+const hi = Array.from({length:10},(_,i)=>'20260705_114104906'+(i?'_0'+i:'')).map(n=>n.replace('_010','_10'));
+const eat = Array.from({length:20},(_,i)=>'20260705_114104906_'+(i+10));
+const T = [
+ {d:'2025-11-28', t:'세상 구경 시작', desc:'모자 쓰고 첫 외출 룩. 표정은 이미 “여기 뭐 먹을 거 있어요?”', img:['20251128_125523469']},
+ {d:'2026-03-21', t:'머리숱 폭발', desc:'바람 한 번에 앞머리가 하늘로. 입은 계속 “아~”', img:['20260321_151254599']},
+ {d:'2026-05-19', t:'움직이는 지오 #1', desc:'드디어 사진으론 부족해서 영상 투입.', vid:'20260519_125432568'},
+ {d:'2026-05-26', t:'움직이는 지오 #2', desc:'일주일 만에 또 늘었습니다. (뭐가인지는 비밀)', vid:'20260526_145103862'},
+ {d:'2026-06-23', t:'움직이는 지오 #3', desc:'이쯤부터 카메라를 알아보기 시작.', vid:'20260623_174414103'},
+ {d:'2026-07-05', t:'이유식 모델 오디션 🍼', desc:'턱받이 장착. 표정 10종 세트로 촬영했습니다. 아래 사진을 눌러보세요.', strip:hi},
+ {d:'2026-07-05', t:'떡뻥 먹방 20연사 🍘', desc:'20연속 촬영. 자동 재생 중이에요. 한 입 한 입이 진지합니다.', flip:eat},
+ {d:'2026-07-20', t:'움직이는 지오 #4', desc:'', vid:'20260720_081201181'},
+ {d:'2026-07-23', t:'움직이는 지오 #5', desc:'', vid:'20260723_170745185'},
+ {d:'2026-07-28', t:'움직이는 지오 #6', desc:'', vid:'20260728_210738077'},
+ {d:'2026-08-11', t:'움직이는 지오 #7', desc:'', vid:'20260811_183304641'},
+ {d:'2026-08-18', t:'장난감 정복 🪱', desc:'파란 튜브를 꽉 쥐고 안 놓습니다. 힘이 장사.', strip:['20260818_145215725','20260818_145215725_01']},
+ {d:'2026-08-25', t:'기어다니기 시작!', desc:'웃으며 돌진해오는 지오. 도망치세요.', img:['20260825_013011214']},
+ {d:'2026-09-03', t:'파티피플 지오 😎', desc:'선글라스는 이미 장만. 돌잔치 준비 완료.', img:['20260903_105348426']},
+ {d:'2026-09-03', t:'혼자 앉기 성공', desc:'장난감 로봇이 쳐다보는 와중에도 중심 안 잃음.', strip:['20260903_152645142','20260903_152645142_02','20260903_152645142_04']},
+ {d:'2026-09-14', t:'어깨 으쓱 지오', desc:'“저 오늘 좀 잘생겼죠?”', strip:['20260914_175440617','20260914_175440617_01']},
+ {d:'2026-09-27', t:'웃음 터진 날', desc:'엄마 아빠 어디 가셨어요? 내가 다 웃겨드릴게요.', strip:['20260927_191455158','20260927_191455158_01','20260927_191455158_02']},
+ {d:'2026-09-29', t:'움직이는 지오 #8', desc:'', vid:'20260929_103719039'},
+ {d:'2026-09-29', t:'움직이는 지오 #9', desc:'', vid:'20260929_213702299'},
+ {d:'2026-10-08', t:'밤에 또 울었어요 🌙', desc:'이날의 사건은 아래에서 자세히 다룹니다. 오늘의 울음 기록 #2', img:['20261008_143840640']},
+ {d:'2026-10-17', t:'노란 집 탐험', desc:'놀이터 건축가 지오. 이 집은 내가 접수했다.', strip:['20261017_175043970','20261017_175043970_01']},
+ {d:'2026-10-23', t:'모자 쓴 지오', desc:'회색 모자 패션. 이모 삼촌 품에서 포즈.', strip:['20261023_104735361','20261023_104735361_01','20261023_104735361_02']},
+ {d:'2026-10-24', t:'옥수수와 한 몸', desc:'바라보는 눈빛이 진심.', strip:['20261024_192333731','20261024_193644695','20261024_193644695_01']},
+ {d:'2026-10-26', t:'움직이는 지오 #10', desc:'돌 직전 최신 영상.', vid:'20261026_135339242'},
+ {d:'2026-10-31', t:'돌 기념 스튜디오 컷 📸', desc:'치아미남 지오, 웃음은 풀옵션.', strip:['20261031_111053399','20261031_111053399_01']}
+];
+
+const fmt = d => { const [y,m,dd]=d.split('-').map(Number); const dt=new Date(y,m-1,dd); const n=Math.floor((dt-BIRTH)/864e5);
+  const wk='일월화수목금토'[dt.getDay()]; return {s:`${y}.${String(m).padStart(2,'0')}.${String(dd).padStart(2,'0')} (${wk})`, n}; };
+const mo = n => n<30 ? `D+${n}` : `D+${n} · ${Math.floor(n/30.4)}개월`;
+const tl = $('#tl');
+T.forEach((it,idx)=>{
+  const f = fmt(it.d);
+  let m='';
+  if(it.img) m = `<div class="media"><img src="img/${it.img[0]}.jpg" alt="${it.t}" loading="lazy"></div>`;
+  if(it.strip) m = `<div class="strip">${it.strip.map((n,i)=>`<div class="media"><img src="img/${n}.jpg" alt="${it.t} ${i+1}" loading="lazy">${it.strip.length>1?`<span class="badge">${i+1} / ${it.strip.length}</span>`:''}</div>`).join('')}</div>`;
+  if(it.vid) m = `<div class="media"><video muted loop playsinline preload="none" poster="video/${it.vid}.jpg" data-src="video/${it.vid}.mp4"></video><span class="badge">▶ 움짤</span><div class="vid-play">▶</div></div>`;
+  if(it.flip) m = `<div class="media flip" data-frames='${JSON.stringify(it.flip)}'><img src="img/${it.flip[0]}.jpg" alt="${it.t}" loading="lazy"><span class="cnt">1 / ${it.flip.length}</span></div>`;
+  tl.insertAdjacentHTML('beforeend',`<div class="tl-item reveal"><div class="tl-date">${f.s}<i>${mo(f.n)}</i></div><div class="tl-title">${it.t}</div>${m}${it.desc?`<p class="tl-desc">${it.desc}</p>`:''}</div>`);
+});
+
+/* 스크롤 컨테이너 (모바일: window, 데스크톱 폰프레임: .scroller) */
+const sc = $('#scroller');
+const root = () => getComputedStyle(sc).overflowY==='auto' ? sc : null;
+
+/* 등장 애니메이션 + 영상 자동재생 + 연사 */
+const io = new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){e.target.classList.add('in');} }),{root:root(),threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+const vio = new IntersectionObserver(es=>es.forEach(e=>{
+  const v=e.target, box=v.closest('.media');
+  if(e.isIntersecting){ if(!v.src) v.src=v.dataset.src; v.play().then(()=>box.classList.add('playing')).catch(()=>{}); }
+  else { v.pause(); box.classList.remove('playing'); }
+}),{root:root(),threshold:.5});
+document.querySelectorAll('video').forEach(v=>{ vio.observe(v); v.addEventListener('click',()=>v.paused?v.play():v.pause()); });
+
+document.querySelectorAll('.flip').forEach(box=>{
+  const fr = JSON.parse(box.dataset.frames), img = box.querySelector('img'), cnt = box.querySelector('.cnt'); let i=0, h=null;
+  fr.forEach(n=>{ const p=new Image(); p.src=`img/${n}.jpg`; });
+  const run = ()=>{ h=setInterval(()=>{ i=(i+1)%fr.length; img.src=`img/${fr[i]}.jpg`; cnt.textContent=`${i+1} / ${fr.length}`; },260); };
+  new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ if(!h) run(); } else { clearInterval(h); h=null; } }),{root:root(),threshold:.4}).observe(box);
+});
+
+/* D-day / 카운트다운 */
+function tick(){
+  const now = new Date(), diff = PARTY-now;
+  $('#dayCount').textContent = 'D+'+Math.floor((now-BIRTH)/864e5);
+  if(diff<=0){ $('#ddayBig').textContent='오늘이에요! 🎉'; ['D','H','M','S'].forEach(k=>$('#cd'+k).textContent=0); return; }
+  const d=Math.floor(diff/864e5), h=Math.floor(diff/36e5)%24, m=Math.floor(diff/6e4)%60, s=Math.floor(diff/1e3)%60;
+  const dayDiff = Math.ceil((new Date(PARTY.getFullYear(),PARTY.getMonth(),PARTY.getDate())-new Date(now.getFullYear(),now.getMonth(),now.getDate()))/864e5);
+  $('#ddayBig').textContent = dayDiff===0 ? 'D-DAY 🎉' : 'D-'+dayDiff;
+  $('#cdD').textContent=d; $('#cdH').textContent=h; $('#cdM').textContent=m; $('#cdS').textContent=s;
+}
+tick(); setInterval(tick,1000);
+
+/* 주소 복사 / 공유 */
+$('#copyAddr').onclick = ()=>{ const a='충북 청주시 흥덕구 가포산로 200 주건축물 제1동 1층 (한상)';
+  (navigator.clipboard?navigator.clipboard.writeText(a):Promise.reject()).then(()=>toast('주소 복사 완료 📋')).catch(()=>{prompt('주소를 복사하세요',a)}); };
+$('#share').onclick = async ()=>{
+  const data={title:'지오 돌잔치 초대장',text:'🍼 지오 돌잔치 · 11/14(토) 11:30 · 안 오시면 지오 울어요 😭',url:location.href};
+  try{ if(navigator.share) await navigator.share(data); else { await navigator.clipboard.writeText(location.href); toast('링크 복사 완료! 단톡방에 붙여넣기 📤'); } }catch(e){}
+};
+
+/* 컨페티 */
+const cv=$('#confetti'), cx=cv.getContext('2d'); let parts=[], raf=null;
+function size(){ const r=cv.getBoundingClientRect(); cv.width=r.width; cv.height=r.height; } size(); addEventListener('resize',size);
+function burst(x,y,n=90){
+  const cols=['#FF6B5B','#FFC93C','#6CCBB0','#BFE3F5','#1C2B4A','#fff'];
+  for(let i=0;i<n;i++) parts.push({x,y,vx:(Math.random()-.5)*12,vy:Math.random()*-12-3,g:.35,s:5+Math.random()*7,c:cols[i%cols.length],r:Math.random()*6,vr:(Math.random()-.5)*.4,life:120+Math.random()*60});
+  if(!raf) loop();
+}
+function loop(){
+  cx.clearRect(0,0,cv.width,cv.height);
+  parts=parts.filter(p=>p.life>0&&p.y<cv.height+20);
+  parts.forEach(p=>{ p.x+=p.vx; p.y+=p.vy; p.vy+=p.g; p.vx*=.99; p.r+=p.vr; p.life--; cx.save(); cx.translate(p.x,p.y); cx.rotate(p.r); cx.fillStyle=p.c; cx.fillRect(-p.s/2,-p.s/4,p.s,p.s/2); cx.restore(); });
+  raf = parts.length ? requestAnimationFrame(loop) : null;
+}
+setTimeout(()=>{ const r=cv.getBoundingClientRect(); burst(r.width/2, r.height*.35, 120); },500);
+
+/* RSVP */
+const yes=$('#yes'), no=$('#no');
+const stored = (()=>{ try{return localStorage.getItem('jio_rsvp')}catch(e){return null} })();
+function accepted(){ $('#thanks').classList.add('show'); yes.textContent='🍻 참석 확정! (취소 불가)'; no.style.display='none';
+  const r=cv.getBoundingClientRect(); burst(r.width/2,r.height*.6,160); try{localStorage.setItem('jio_rsvp','yes')}catch(e){} }
+if(stored==='yes'){ $('#thanks').classList.add('show'); yes.textContent='🍻 참석 확정! (취소 불가)'; no.style.display='none'; }
+yes.onclick = accepted;
+const excuses=['정말요…? 😢','지오 울어요…','다시 생각해보세요 🥺','떡뻥 드릴게요!','버튼이 도망가네요?'];
+let ni=0;
+function dodge(e){ e && e.preventDefault(); const w=$('#rsvp').clientWidth*.35; no.style.left=((Math.random()-.5)*w*2)+'px'; no.style.top=((Math.random()-.5)*50)+'px'; no.textContent=excuses[ni++%excuses.length]; }
+no.addEventListener('mouseenter',dodge); no.addEventListener('touchstart',dodge,{passive:false});
+no.onclick = ()=>{ dodge(); toast('😭 지오 울어요 — 다시 눌러주세요'); };
+</script>
+</body>
+</html>
